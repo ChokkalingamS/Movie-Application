@@ -1,0 +1,485 @@
+// Button
+
+import './App.css';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import InfoIcon from '@mui/icons-material/Info';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+// import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+// import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+
+// Dark Theme
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Card from '@mui/material/Card';
+// import CardContent from '@mui/material/CardContent';
+import Paper from '@mui/material/Paper';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LightModeIcon from '@mui/icons-material/LightMode';
+
+// Appbar
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+// Route
+import { Switch, Route, Link,Redirect,useHistory,useParams } from "react-router-dom";
+import { useState,useEffect} from 'react';
+
+// Validation
+import {useFormik} from 'formik';
+import * as yup from 'yup';
+
+
+
+
+export default  function App() 
+{
+  
+  // let [newmovielist, setNewmovielist] = useState([]);
+  let [deletedmovielist,setDeletedmovielist]=useState([{}]);
+
+  
+
+
+  let [mode,setMode]=useState('dark')
+  let setTheme=()=>{return (mode==="light")?"dark":"light"}
+  {var light=<LightModeIcon className="themebutton"></LightModeIcon>}
+  { var dark=<DarkModeIcon className="themebutton"></DarkModeIcon>}
+  
+  let themebutton=()=>{ return (mode==="light")?dark:light}
+  // Theme
+  const theme = createTheme({
+    palette: {mode:mode,},
+  });
+  // console.log(deletedmovielist);
+  return (
+    <ThemeProvider theme={theme}>
+      <Paper elevation={0} style={{borderStyle:"none",minHeight:"100vh"}}>
+                  <div className="Main"> 
+                <div className="list">
+                <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static">
+                <Toolbar variant="dense">
+                <Typography variant="h6" color="inherit" component="div">
+                <Button color="inherit"><Link className="link" to="/">Home</Link></Button>
+                <Button color="inherit"><Link className="link" to="/Movies">Movies</Link></Button>
+                <Button color="inherit"><Link className="link" to="/Add Movies">Add Movies</Link></Button>
+                <Button color="inherit"><Link className="link" to="/Deleted Movies">Deleted Movies</Link></Button>
+                <IconButton style={{marginLeft:"55rem"}}  onClick={()=>setMode(setTheme)}>{themebutton()}</IconButton>
+                </Typography>
+                </Toolbar>
+                </AppBar>
+                </Box>
+  </div>       
+                 {/* <Card> */}
+                 {/* <CardContent>  */}
+                <Switch>
+
+                <Route path="/Films"> <Redirect to="/Add Movies"/> </Route>                 {/* Redirecting*/}
+                
+                <Route exact path="/Movies"> <Movieslist deletedmovielist={deletedmovielist} setDeletedmovielist={setDeletedmovielist}/></Route>     {/* OldMovielist */}
+                
+                <Route exact path="/Movies/Edit/:i"><EditMoviedata/></Route>   {/* Edit Movie*/}
+
+                <Route exact path="/Deleted Movies"><Deletedmovies  data={deletedmovielist} /></Route>
+
+                <Route  path="/Movies/:i"><IndividualMoviedata /></Route>  {/* Individual Moviedata */}
+
+                <Route path="/Add Movies"> <Movies/></Route>  {/*Adding New Movies*/}
+                
+                <Route exact path="/">Hello</Route>
+                
+                <Route path="**"><Errorpage/></Route>
+                
+                </Switch>
+                {/* </CardContent>   */}
+                {/* </Card> */}
+   </div> 
+   </Paper>
+   </ThemeProvider>             
+   )
+         
+}
+                                               
+//  Adding Movies with validation                                                                                                                               
+function Movies()
+ {
+  let history=useHistory();
+   let Addmovie=(movies)=>{
+    fetch("https://6166c50413aa1d00170a6723.mockapi.io/movieslist",
+    {method:"POST",
+    body:JSON.stringify(movies),
+    headers:{'Content-Type': 'application/json'} 
+    }).then(()=>history.push("/Movies"));
+    }
+
+  let validation =yup.object({
+    name:yup.string().required(),
+    poster:yup.string().required(),
+    rating:yup.number().required(),
+    summary:yup.string().required(),
+    src:yup.string().required()
+  })
+
+
+  const{handleChange,handleBlur,handleSubmit,errors,values,touched}=useFormik({
+    initialValues:{name:"",poster:"",rating:"",summary:"",src:""},
+    validationSchema:validation,
+    onSubmit:(movies)=>{Addmovie(movies);console.log(movies);}
+  })
+       return (<div className="content">
+      <form className="field"  onSubmit={handleSubmit}>
+      <TextField fullWidth type="text"
+       value={values.name}
+       id="name" name="name" placeholder="Movie Name"
+       onInput={handleChange} onBlur={handleBlur} 
+      error={errors.name && touched.name}
+      helperText={errors.name && touched.name &&errors.name}
+       label="Name" id="filled-basic" variant="filled" />
+      
+
+      <TextField fullWidth type="text"
+       value={values.poster} id="poster" name="poster" placeholder="Movie Poster URL" 
+       onInput={handleChange} onBlur={handleBlur}
+       error={errors.poster && touched.poster}
+       helperText={errors.poster && touched.poster&& errors.poster}
+      label="Poster" id="filled-basic" variant="filled" />
+      
+      
+      <TextField fullWidth type="text"
+      value={values.rating} id="rating" name="rating" placeholder="Movie Rating"
+      onInput={handleChange} onBlur={handleBlur}
+      error={errors.rating && touched.rating}
+      helperText={errors.rating && touched.rating&& errors.rating}
+      label="Rating" id="filled-basic" variant="filled" />
+      
+
+      <TextField fullWidth type="text" value={values.summary}
+      id="summary" name="summary" placeholder="Movie Summary"
+      onInput={handleChange} onBlur={handleBlur}  
+      error={errors.summary && touched.summary}
+      helperText={errors.summary && touched.summary&&errors.summary}
+       label="Summary" id="filled-basic" variant="filled" />
+      
+      <TextField fullWidth type="text" value={values.src}
+       id="src" name="src"placeholder="Movie Trailer src"
+       onInput={handleChange} onBlur={handleBlur}
+       error={errors.src && touched.src}
+       helperText={errors.src && touched.src&&errors.src}
+       label="Trailer" id="filled-basic" variant="filled" />
+      
+      <Button variant="contained" type="submit" >Save</Button>
+      </form>
+  </div>
+  );
+}
+
+// function Movies()
+//  {
+//   // let [newmovielist, setNewmovielist] = useState([]);
+//   let history=useHistory();
+//   // let {data,setNewmovielist}=get
+//   let [moviename, setMoviename] = useState("");
+//   let [movieposter, setMovieposter] = useState("");
+//   let [movierating, setMovierating] = useState("");
+//   let [moviesummary, setMoviesummary] = useState("");
+//   let [movietrailer, setMovietrailer] = useState("");
+//   let movies = { name: moviename, poster: movieposter, rating: movierating, summary: moviesummary, src:movietrailer};
+//   let Addmovie=()=>{
+//     fetch("https://6166c50413aa1d00170a6723.mockapi.io/movieslist",{method:"POST",
+//     body:JSON.stringify(movies),
+//     headers:{'Content-Type': 'application/json'} 
+//   }
+//     ).then(()=>history.push("/Movies"));
+//   }
+
+//   return (<div className="content">
+//     <div className="field">
+//       <TextField fullWidth placeholder="Movie Name" onChange={(event) => { return setMoviename(() => event.target.value); }} label="Name" id="filled-basic" variant="filled" />
+//       <TextField fullWidth placeholder="Movie Poster URL" onChange={(event) => { return setMovieposter(() => event.target.value); }} label="Poster" id="filled-basic" variant="filled" />
+//       <TextField fullWidth placeholder="Movie Rating" onChange={(event) => { return setMovierating(() => event.target.value); }} label="Rating" id="filled-basic" variant="filled" />
+//       <TextField fullWidth placeholder="Movie Summary" onChange={(event) => { return setMoviesummary(() => event.target.value); }} label="Summary" id="filled-basic" variant="filled" />
+//       <TextField fullWidth placeholder="Movie Trailer URL" onChange={(event) => { return setMovietrailer(() => event.target.value); }} label="Trailer" id="filled-basic" variant="filled" />
+//       {/* <Button variant="contained" onClick={() => { console.log(newmovielist); return setNewmovielist((data) => [...data, movies])}}>Save</Button> */}
+//       <Button variant="contained" onClick={() =>Addmovie()}>Save</Button>
+//     </div>
+   
+//   </div>
+//   );
+// }
+
+
+
+function Movieslist({setDeletedmovielist,deletedmovielist})   /*Display Movielist,   Deleting Movies*/  
+{
+  let [newmovielist, setNewmovielist] = useState([]);
+  let Displaymovies=()=>fetch("https://6166c50413aa1d00170a6723.mockapi.io/movieslist").then((x)=>x.json()).then((data)=>setNewmovielist(data));
+  useEffect(Displaymovies,[]);
+  let history=useHistory();
+   let deletemovie=((id)=>fetch(`https://6166c50413aa1d00170a6723.mockapi.io/movieslist/${id}`,{method:"DELETE"})
+   .then((x)=>x.json()).then((x)=>setDeletedmovielist([...deletedmovielist,x])).then(()=>Displaymovies()));
+// console.log(deletedmovielist);
+  
+  return (
+  
+    <div className="movie-main">
+    {newmovielist.map(({name,poster,rating,summary,id},index)=> {return(<Card key={index} className="movie-content">     
+    <img src={poster} alt={name} title={name} />   
+    <div className="movie-details">        
+    <p>Name: {name}</p>  
+    <p>Rating: {rating}</p>
+    <Moreinfo summary={summary} history={history} i={id} data={newmovielist} 
+    deletedmovie={<IconButton onClick={()=>deletemovie(id)}>
+    <DeleteIcon color="error"></DeleteIcon></IconButton>}
+    editmovie= {<IconButton onClick={()=>history.push("/Movies/Edit/"+id)}> <EditIcon color="primary"></EditIcon> </IconButton>} />
+
+
+    {/* // deletedmovie={<IconButton onClick={()=>{setNewmovielist(deleteMovie(i));setDeletedmovielist([...deletedmovielist,...deletedMovies(i)])}}>
+    //   <DeleteIcon color="error"></DeleteIcon></IconButton>}  */}
+    
+    </div>    
+   </Card>)})}
+   </div>)
+}
+
+function Moreinfo({summary,i,history,data,editmovie,deletedmovie})  /*Movie Details*/ 
+{
+  
+    
+
+  let [description, setDescription] = useState("none");
+  let contentvisibility = (() => { console.log("visibility"); return setDescription(() => (description === "block") ? "none" : "block"); });
+  let visibility = { display: description };
+  let [like, setLike] = useState(0);
+  let [dislike, setDislike] = useState(0);
+  return (
+    <div>
+        <IconButton onClick={() => { return contentvisibility(); }}><InfoIcon color="secondary"/></IconButton>
+        <IconButton onClick={() => { console.log(i); return   history.push("/Movies/"+ i)}}>
+        <InfoIcon color="primary"/></IconButton>  
+        <button onClick={() => { return setLike((like) => (like===0)?1:0); }}>Like{like}</button>
+        <button onClick={() => { return setDislike((dislike) => dislike + 1); }}>Disike{dislike}</button>
+        {editmovie}{deletedmovie}
+        <p className="summary" style={visibility} >Summary: {summary}</p> 
+      </div>);
+}
+
+
+     
+function IndividualMoviedata()  /*Trailer*/ 
+{
+  let [newmovielist, setNewmovielist] = useState({});
+    let {i}=useParams();
+  useEffect((()=>fetch(`https://6166c50413aa1d00170a6723.mockapi.io/movieslist/${i}`).then((data)=>data.json()).then((x)=>setNewmovielist(x))),[])
+
+  console.log(i);
+  console.log("new",newmovielist);
+   let{name,summary,src} =newmovielist
+  return (<div className="movie-main">
+    <iframe width="853" height="480" src={src} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+    <p>{name}</p> 
+    <div className="movie-details">  
+    <p>{summary}</p>
+  
+</div>
+  </div>)
+}
+
+
+function EditMoviedata()
+{
+  let[newmovielist,setNewmovielist]=useState(null);
+  let {i}=useParams();
+  
+  useEffect((()=> fetch(`https://6166c50413aa1d00170a6723.mockapi.io/movieslist/${i}`)
+  .then((data)=>data.json())
+  .then((x)=>setNewmovielist(x))),[]);
+  console.log(newmovielist);
+ return newmovielist===null?"...Loading": <Update newmovielist={newmovielist}/>
+
+}
+
+function Update({newmovielist})
+{
+  let history=useHistory();
+  let{name,poster,rating,summary,src,id}=newmovielist;
+
+//   let validation=yup.object({
+//     name:yup.string().required(),
+//     poster:yup.string().required(),
+//     rating:yup.number().required(),
+//     summary:yup.string().required(),
+//     url:yup.string().required(),
+// })
+  let validation=(values)=>{
+    console.log("validate",values);
+    
+    let error={}
+    console.log(error);
+    if(values.name==="")
+    {
+      error.name="Field Should not be empty"
+      console.log("error message",error);
+    }
+    if(values.poster==="")
+    {
+      error.poster="Field Should not be empty"
+      console.log("error message",error);
+    }
+    if(values.rating==="")
+    {
+      error.rating="Field Should not be empty"
+      console.log("error message",error);
+    }
+    if(values.summary==="")
+    {
+      error.summary="Field Should not be empty"
+      console.log("error message",error);
+    }
+    if(values.src==="")
+    {
+      error.src="Field Should not be empty"
+      console.log("error message",error);
+    }
+
+    return error;
+    
+  }
+
+  let {handleChange,handleBlur,handleSubmit,values,touched,errors}=useFormik(
+    {
+      initialValues:{name:name,poster:poster,rating:rating,summary:summary,src:src},
+      validate:validation,
+      onSubmit:(movies)=>{updatemovie(movies);console.log("submit",movies);}
+    }
+  );
+ 
+ let updatemovie=(movies)=>fetch(`https://6166c50413aa1d00170a6723.mockapi.io/movieslist/${id}`,
+ {
+   method:"PUT",
+   body  : JSON.stringify(movies),
+   headers:{'Content-Type':'application/json'} 
+ }).then(()=>history.push("/Movies"))
+ 
+ 
+ // console.log(editingdata[i]=movies);
+  console.log(name);
+  // console.log("after",editingdata);
+
+  return (<div className="content">
+    <form className="field" onSubmit={handleSubmit}>
+      
+      <TextField fullWidth placeholder="Movie Name"        value={values.name}     onChange={handleChange} onBlur={handleBlur} error={errors.name && touched.name}       helperText={errors.name && touched.name && errors.name}          label="Name"     id="Name"    name="name"    variant="filled" />
+      <TextField fullWidth placeholder="Movie Poster Url"  value={values.poster}   onChange={handleChange} onBlur={handleBlur} error={errors.poster && touched.poster}   helperText={errors.poster && touched.poster && errors.poster}    label="Poster"   id="Poster"  name="poster"  variant="filled" />
+      <TextField fullWidth placeholder="Movie Rating"      value={values.rating}   onChange={handleChange} onBlur={handleBlur} error={errors.rating && touched.rating}   helperText={errors.rating && touched.rating && errors.rating}    label="Rating"   id="Rating"  name="rating"  variant="filled" />
+      <TextField fullWidth placeholder="Movie Summary"     value={values.summary}  onChange={handleChange} onBlur={handleBlur} error={errors.summary && touched.summary} helperText={errors.summary && touched.summary && errors.summary} label="Summary"  id="Summary" name="summary" variant="filled" />
+      <TextField fullWidth placeholder="Movie Trailer Url" value={values.src}      onChange={handleChange} onBlur={handleBlur} error={errors.src && touched.src}         helperText={errors.src && touched.src && errors.src }            label="Trailer"  id="src"     name="src"     variant="filled" />
+      
+      <Button type="submit" variant="contained" >Save</Button>
+    </form>
+   
+  </div>
+  );
+ 
+}
+
+
+// function EditMoviedata()
+// {
+//   let[newmovielist,setNewmovielist]=useState(null);
+//   let {i}=useParams();
+  
+//   useEffect((()=> fetch(`https://6166c50413aa1d00170a6723.mockapi.io/movieslist/${i}`).then((data)=>data.json()).then((x)=>setNewmovielist(x))),[]);
+//   console.log(newmovielist);
+//  return newmovielist===null?"...Loading": <Update newmovielist={newmovielist}/>
+
+// }
+
+// function Update({newmovielist})
+// {
+//   let history=useHistory();
+//  let{name,poster,rating,summary,src,id}=newmovielist;
+//   let [moviename, setMoviename] = useState(name);
+//   let [movieposter, setMovieposter] = useState(poster);
+//   let [movierating, setMovierating] = useState(rating);
+//   let [moviesummary, setMoviesummary] = useState(summary);
+//   let [movietrailer, setMovietrailer] = useState(src);
+//  console.log(moviename);
+//  let movies = { name: moviename, poster: movieposter, rating: movierating, summary: moviesummary, src:movietrailer};
+//  let updatemovie=()=>fetch(`https://6166c50413aa1d00170a6723.mockapi.io/movieslist/${id}`,
+//  {
+//    method:"PUT",
+//    body  : JSON.stringify(movies),
+//    headers:{'Content-Type':'application/json'} 
+//  }).then(()=>history.push("/Movies"))
+ 
+ 
+//  // console.log(editingdata[i]=movies);
+//   console.log(name);
+//   // console.log("after",editingdata);
+
+//   return (<div className="content">
+//     <div className="field">
+//       {/* <p>{moviename} </p> */}
+//       <TextField fullWidth placeholder="Movie Name"        value={moviename}     onChange={(event) => { return setMoviename(() => event.target.value); }} label="Name" id="filled-basic" variant="filled" />
+//       <TextField fullWidth placeholder="Movie Poster URL"  value={movieposter}   onChange={(event) => { return setMovieposter(() => event.target.value); }} label="Poster" id="filled-basic" variant="filled" />
+//       <TextField fullWidth placeholder="Movie Rating"      value={movierating}   onChange={(event) => { return setMovierating(() => event.target.value); }} label="Rating" id="filled-basic" variant="filled" />
+//       <TextField fullWidth placeholder="Movie Summary"     value={moviesummary}  onChange={(event) => { return setMoviesummary(() => event.target.value); }} label="Summary" id="filled-basic" variant="filled" />
+//       <TextField fullWidth placeholder="Movie Trailer URL" value={movietrailer}  onChange={(event) => { return setMovietrailer(() => event.target.value); }} label="Trailer" id="filled-basic" variant="filled" />
+//       {/* <Button variant="contained" onClick={() => { console.log(movies); return setNewmovielist(editingdata)}}>Save</Button> */}
+//       <Button variant="contained" onClick={() =>updatemovie()}>Save</Button>
+//     </div>
+   
+//   </div>
+//   );
+  
+// }
+
+
+function Deletedmovies({data}) 
+{
+
+  // let zeroindexdata=[...data]
+  // data.shift();
+  // { useEffect(()=>setNewmovielist((s)=>[...s,data] ))}
+// setNewmovielist(deletedtrailerdata)
+let history=useHistory();
+if(data.length<2)
+{
+  return <p>No Movies</p>
+}
+else
+{
+  
+// console.log( deletedtrailerdata());
+  console.log(data);
+  return<div className="movie-main">  {data.filter((x,ind)=>0!==ind).map(({name,poster,rating,summary,id},index)=> {return( <Card  key={index}className="movie-content">
+        <img src={poster} alt={name} title={name} />   
+            <div className="movie-details">        
+            <p>Name: {name}</p>  
+             <p>Rating: {rating}</p>
+             <p>Summary: {summary}</p>
+             {/* <Moreinfo summary={summary} history={history} i={id}/> */}
+             {/* <IndividualMoviedata  newmovielist={deletedtrailerdata}/> */}
+             {/* { useEffect(()=>setNewmovielist(()=> zeroindexdata))} */}
+             {/* {setNewmovielist(data)} */}
+             {console.log(index)}
+             </div>
+             </Card>
+             )})}</div>
+}
+
+
+}
+
+
+function Errorpage() 
+{
+  console.log("hi");
+  return(<div className='error-page'>
+    <img src="https://assets.materialup.com/uploads/c13818e8-9e42-4f4d-b657-38743a81b270/preview.gif" alt="404 NOT FOUND"/>
+  </div>)
+}
+

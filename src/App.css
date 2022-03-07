@@ -1,0 +1,273 @@
+body{
+  background-color: #020916;
+}
+
+.link
+{
+  text-decoration:none;
+  color:white;
+  
+  
+}
+
+.field
+{
+  display: flex;
+  flex-direction: column;
+  height:fit-content;
+  width:50rem;
+  margin:10px auto;
+}
+.textbox
+{
+  margin:0.5rem;
+}
+.content
+{
+  
+  margin-top:2rem;
+  height:85vh;
+  background-color: white;
+  width:55rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  margin-left:15rem;
+  border-radius: 10px;
+  
+}
+
+.content>p
+{
+  font-family:  'Roboto', 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  margin-top: -0.5rem;
+}
+.add-text-field-container
+{
+  height:5rem;
+  color: whitesmoke !important;
+}
+.movie-main
+{
+  margin: 2rem 0;
+  justify-items: center;
+  display:grid;
+  row-gap:1rem;
+  grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+}
+
+.movie-content
+{
+  width: fit-content;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+  height:300px;
+  width:239px;
+cursor: pointer;
+ 
+  
+}
+.overlay-container
+{
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  margin-top:-11rem;
+  margin-left:7.5rem;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  /* margin-left: 5rem; */
+}
+
+.movie-content:hover .overlay-container 
+{
+  opacity:1;
+}
+.play-button
+{
+  height:5rem !important;
+  width:5rem !important;
+  /* fill: green !important; */
+}
+
+.movie-content:hover img
+{
+  opacity: 0.3;
+}
+
+.movie-content img
+{
+  height:300px;
+  width:239px;
+  object-fit:cover;
+  border-radius:5px;
+  transition: .5s ease;
+  backface-visibility: hidden;
+  opacity: 1;
+  display: block;
+}
+
+
+.ind-movie-data
+{
+  display: flex;
+  gap:0.5rem;
+  flex-direction: column;
+  margin-top:5rem;
+  margin-bottom: 2rem;
+}
+.youtube-video
+{
+  width: 853px;
+  height: 480px;
+  margin-left:5rem; 
+}
+
+.movie-heading
+{
+  color:white;
+  margin-left:5rem;
+  font-size: 2rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.more-info-container
+{
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
+  width: 853px;
+  margin-left:18rem;
+}
+
+.movie-details
+{
+  color: white;
+}
+.movie-details img
+{
+  height:300px;
+  width:239px;
+  object-fit:cover;
+  border-radius:5px;
+  border: 3px solid #6c757d;
+}
+.more-info
+{
+  width:25rem;
+  margin-right:10rem;
+}
+
+.more-info label
+{
+  color:#6c757d;
+}
+.summary
+{
+  font-size:16px;
+  font-weight:400;
+  font-family: 'Roboto', serif;
+  width:20rem;
+  text-overflow: clip;
+  text-align: justify;
+} 
+.watchlist-btn-container
+{
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  gap:4rem;
+}
+.watchlist-btn-container>Button
+{
+  margin-top: 0.5rem;
+  
+}
+
+.error-page img
+{
+  text-align: center;
+  height:92.3vh;
+  width:100vw;
+  margin-bottom: 0;
+}
+
+
+.search-field
+{
+  all:unset;
+  background-color: white;
+  color:black;
+  padding:0 12px;
+  height:3rem;
+  width:20rem;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  color:#6c757d;
+  font-family: 'Roboto';
+}
+
+.auth-container
+{
+  width:25rem;
+  height:24rem;
+  padding:2rem;
+  background-color: white;
+  border-radius: 5px;
+  margin:5rem auto;
+}
+
+
+
+.auth-heading
+{
+  margin-left:7rem;
+  margin-bottom: 2rem;
+}
+
+
+.textfield-container
+{
+    height: 4rem;
+}
+
+.breakline
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.breakline p
+{
+    margin:1rem 1rem;
+    font-size:16px;
+    color:#6c757d;
+
+}
+
+.line
+{
+    background-color: #6c757d;
+    height:1px;
+    width:200px;
+}
+
+.login-G,.register-G
+{
+    background-color: white !important;
+    color:#6c757d !important;
+    gap: 1rem;
+    height:40px;
+}
+
+
+.login-G:hover,.register-G:hover
+{
+  background-color: rgba(207, 210, 226, 1) !important;
+  /* color:orangered !important; */
+}
