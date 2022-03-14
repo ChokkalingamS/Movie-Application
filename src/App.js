@@ -41,6 +41,9 @@ import * as yup from 'yup';
 
 
 const URL="https://node-movies-list.herokuapp.com"
+const user_URL="http://localhost:2000/user"
+const movie_URL="http://localhost:2000/movie"
+
 // const mock_URL="https://6166c50413aa1d00170a6723.mockapi.io"
 // movies-movieslist
 
@@ -51,44 +54,70 @@ export default  function App()
   
   let [newmovielist, setNewmovielist] = useState([]);
   let [deletedmovielist,setDeletedmovielist]=useState([{}]);
+  const [Email]=useState(localStorage.getItem('Email')||'');
+  const [Token]=useState(localStorage.getItem('Token'||''));
+  let history=useHistory();
 
-  let obj={newmovielist, setNewmovielist}
+  const [showData,setShowData]=useState(false);
+  const [query,setQuery]=useState('');
+  const [filteredResults,setFilteredResults]=useState('')
 
+  let obj={newmovielist, setNewmovielist,Email,Token}
 
-  let [mode,setMode]=useState('dark')
-  let setTheme=()=>{return (mode==="light")?"dark":"light"}
-  var light=<LightModeIcon className="themebutton"></LightModeIcon>
-   var dark=<DarkModeIcon className="themebutton"></DarkModeIcon>
-  
-  let themebutton=()=>{ return (mode==="light")?dark:light}
-  // Theme
-  const theme = createTheme({
-    palette: {mode:mode,},
-  });
-  // console.log(deletedmovielist);
+  const SearchMovie=(searchData)=>{
+
+    setQuery(searchData)
+    if(searchData!=="")
+    {
+      const filterData = newmovielist.filter(({ name }) => {
+        return name.toLowerCase().includes(searchData.toLowerCase());
+    });
+    setFilteredResults(filterData)
+        if(!filterData.length)
+        {
+          setFilteredResults('')
+        }
+        else
+        {
+          setShowData(true)
+        }
+
+    }
+    // else if(searchData==='')
+    // {
+
+    // }
+
+  }
+
+  useEffect(()=>{
+    if(query==='')
+    {
+      setShowData(false);
+    }
+  },[query])
+
   return (
-    // <ThemeProvider theme={theme} style={{borderStyle:"none",Height:"100vh"}}>
-      // <Paper elevation={0} >
                   <div className="Main"> 
                 <div className="list">
-                {/* <Box sx={{ flexGrow: 1 }}> */}
-                {/* <AppBar position="static"> */}
-                {/* <Toolbar variant="dense"> */}
-                {/* <Typography variant="h6" color="inherit" component="div"> */}
-                {/* <Button color="inherit"><Link className="link" to="/">Home</Link></Button> */}
+
                 <Button color="inherit"><Link className="link" to="/">Home</Link></Button>
                 <Button color="inherit"><Link className="link" to="/Add Movies">Add Movies</Link></Button>
                 <Button color="inherit"><Link className="link" to="/watchlist">WatchList</Link></Button>
-                <Button color="inherit"><Link className="link" to="/Auth">Login</Link></Button>
 
-                <IconButton style={{marginLeft:"55rem"}}  onClick={()=>setMode(setTheme)}>{themebutton()}</IconButton>
-                {/* </Typography>
-                </Toolbar>
-                </AppBar>
-                </Box> */}
+               {(!Email && !Token)?<Button color="inherit" onClick={()=>history.push('/Auth')}>
+                  <Link className="link" to="/Auth">Login</Link>
+                </Button>:''}
+
+                {(Email || Token)?<Button  onClick={()=>{localStorage.clear();window.location.reload(false);}}>
+                  LogOut
+                </Button>:''}
+
+                <input type='text' id='search-field'  onChange={(e) => { SearchMovie(e.target.value); }} placeholder='Search Movies...'/>
+                {(showData)?<SearchData filteredResults={filteredResults} setFilteredResults={setFilteredResults} setShowData={setShowData}/>:''}
+
   </div>       
-                 {/* <Card> */}
-                 {/* <CardContent>  */}
+                 
                  <context.Provider  value={obj}>
                 <Switch>
 
@@ -98,29 +127,53 @@ export default  function App()
                 
                 <Route exact path="/Movies/Edit/:i"><EditMoviedata/></Route>   {/* Edit Movie*/}
 
-                {/* <Route exact path="/Deleted Movies"><Deletedmovies  data={deletedmovielist} /></Route> */}
-
                 <Route  path="/Movies/:i"><IndividualMoviedata /></Route>  {/* Individual Moviedata */}
 
                 <Route path="/Add Movies"> <Movies/></Route>  {/*Adding New Movies*/}
                 
-                <Route exact path="/watchlist"><Search/></Route>
+                <Route exact path="/watchlist"><WatchList/></Route>
 
                 <Route exact path='/Auth'><Auth/></Route>
-
-                {/* <Route exact path="/login"><Login/></Route> */}
                 
                 <Route path="**"><Errorpage/></Route>
                 
                 </Switch>
                 </context.Provider>
-                {/* </CardContent>   */}
-                {/* </Card> */}
-   </div> 
-  //  </Paper>
-  //  </ThemeProvider>             
+          
+   </div>          
    )
          
+}
+
+
+function SearchData({filteredResults,setFilteredResults,setShowData})
+{
+  let history=useHistory();
+  if(filteredResults.length>5)
+  {
+    let filterData=filteredResults.filter((a,i)=>i>4)
+    setFilteredResults(filterData)
+  }
+
+    return <div className="filterData-container">
+          {(filteredResults.length)?<div>
+
+            {filteredResults.map(({name,poster,_id})=>{
+              return (<div className='filter-results' onClick={()=>{history.push(`/Movies/${_id}`);setShowData(false)}}>
+                <img src={poster} alt='poster' title={name}/>
+                <div className='filter-result-details'>
+                  <p>{name}</p>
+                  {/* <div className='filter-more-info'>
+                  <span>214m</span>
+                  <span>2014</span>
+                  </div> */}
+                </div>
+              </div>)
+            })}
+
+          </div>:<div className="no-result" >Movie Not Found</div>}
+    </div>
+
 }
 
 
@@ -138,8 +191,6 @@ function Auth()
     <Tabs
       value={value}
       onChange={handleChange}
-      // variant="scrollable"
-      //  scrollButtons="auto"
       aria-label="secondary tabs example"
       TabScrollButtonProps={{style:{color:'rgba(38, 9, 94, 0.5)'}}}
       TabIndicatorProps={{
@@ -165,46 +216,56 @@ function Auth()
 
 
 
-
-
-
-
-
-
 function Signup()
 {
 
+  const [ServerMessage,setServerMessage]=useState('');
+  let history=useHistory();
   let validation =yup.object({
     // eslint-disable-next-line
     Email:yup.string().required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Must Be a Valid Email'),
     Password: yup.string().min(8, 'Minimum 8 Characters Required').required('Required Field')
   })
 
+  const SignUp=(userData)=>{
+
+    axios(
+      {
+        url:`${user_URL}/signup`,
+        method:'POST',
+        data:userData,
+      }).then(response=>{setServerMessage({message:response.data.message,result:'success'});
+      })
+
+      .catch(error=>{setServerMessage({message:error.response.data.message,result:'error'})})
+}
 
   const{handleChange,handleBlur,handleSubmit,errors,values,touched}=useFormik({
     initialValues:{Email:'',Password:''},
     validationSchema:validation,
-    onSubmit:(userData)=>{console.log(userData);}
+    onSubmit:(userData)=>{SignUp(userData);}
   })
   const GoogleSignUp=(userData)=>{
     // setLoading(true)
-    // axios(
-    //   {
-    //     url:'http://localhost:5000/api/users/googlesignup',
-    //     method:'POST',
-    //     data:userData,
-    //   }).then(response=>{setServerMessage({message:response.data.message,result:'success'});
+    axios(
+      {
+        url:`${user_URL}/googlesignup`,
+        method:'POST',
+        data:userData,
+      }).then(response=>{setServerMessage({message:response.data.Message,result:'success'});
       
-    //   localStorage.setItem('login-info',JSON.stringify(response.data));setAuth(response.data)
-    //    setShowToast(true);  setTimeout(() => {history.push('/dashboard')}, 3000); })
+      localStorage.setItem('Email',response.data.Email);
+      localStorage.setItem('token',response.data.token);
+      //  setShowToast(true);  
+      setTimeout(() => {history.push('/')}, 3000); 
+      })
 
-    //   .catch(error=>{setServerMessage({message:error.response.data.message,result:'error'});setShowToast(true);})
+      .catch(error=>{setServerMessage({message:error.response.data.Message,result:'error'})})
 }
 
   const Id=process.env.REACT_APP_CLIENT_ID;
-  console.log(Id)
   const handleSuccess=(response)=>GoogleSignUp(response);
-  const handleFailure=(response)=>console.log(response);
+  
 
 
     return <div className="signup">
@@ -241,9 +302,7 @@ function Signup()
                          clientId={Id}
                          buttonText="Sign In"
                          onSuccess={handleSuccess}
-                         onFailure={handleFailure}
                          cookiePolicy={'single_host_origin'}
-                        //  isSignedIn={true}
                         />
 
     </div>
@@ -253,41 +312,61 @@ function Signup()
 function Login()
 {
 
+  let history=useHistory();
+  const [serverMessage,setServerMessage]=useState('');
   let validation =yup.object({
     // eslint-disable-next-line
     Email:yup.string().required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Must Be a Valid Email'),
     Password: yup.string().min(8, 'Minimum 8 Characters Required').required('Required Field')
   })
 
+  
+
+  const login=(userData)=>{
+    axios(
+      {
+        url:`${user_URL}/login`,
+        method:'POST',
+        data:userData,
+      }).then(response=>{setServerMessage({message:response.data.Message,result:'success'});
+      
+      localStorage.setItem('Email',response.data.Email);
+      localStorage.setItem('token',response.data.token);
+      //  setShowToast(true); 
+       setTimeout(() => {history.push('/')}, 3000); 
+      })
+
+      .catch(error=>{setServerMessage({message:error.response.data.Message,result:'error'})})
+}
+
 
   const{handleChange,handleBlur,handleSubmit,errors,values,touched}=useFormik({
     initialValues:{Email:'',Password:''},
     validationSchema:validation,
-    onSubmit:(userData)=>{console.log(userData);}
+    onSubmit:(userData)=>{login(userData);}
   })
 
-  const GoogleSignUp=(userData)=>{
-    console.log(userData)
-    // setLoading(true)
-    // axios(
-    //   {
-    //     url:'http://localhost:5000/api/users/googlesignup',
-    //     method:'POST',
-    //     data:userData,
-    //   }).then(response=>{setServerMessage({message:response.data.message,result:'success'});
-      
-    //   localStorage.setItem('login-info',JSON.stringify(response.data));setAuth(response.data)
-    //    setShowToast(true);  setTimeout(() => {history.push('/dashboard')}, 3000); })
-
-    //   .catch(error=>{setServerMessage({message:error.response.data.message,result:'error'});setShowToast(true);})
+  const googleLogin=(userData)=>{
+  
+    axios(
+      {
+        url:`${user_URL}/googlelogin`,
+        method:'POST',
+        data:userData,
+      }).then(response=>{setServerMessage({message:response.data.Message,result:'success'})
+      localStorage.setItem('Email',response.data.Email)
+      localStorage.setItem('token',response.data.token)
+        setTimeout(() => {history.push('/')}, 3000)
+      }).catch(error=>{setServerMessage({message:error.response.data.Message,result:'error'});
+      // setShowToast(true);
+    })
 }
 
 
   const Id=process.env.REACT_APP_CLIENT_ID;
-  const handleSuccess=(response)=>GoogleSignUp(response);
-  const handleFailure=(response)=>console.log(response);
+  const handleSuccess=(response)=>googleLogin(response);
 
-  return<div className="login">
+  return(<div className="login">
   <form onSubmit={handleSubmit}>
   <div className="textfield-container">
   <TextField type='text' label='Email' fullWidth className="signup-textfield" variant='outlined'
@@ -321,39 +400,28 @@ function Login()
                          clientId={Id}
                          buttonText="Sign In"
                          onSuccess={handleSuccess}
-                         onFailure={handleFailure}
                          cookiePolicy={'single_host_origin'}
                         //  isSignedIn={true}
                         />
 
-</div>
+</div>)
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                               
+                                              
 //  Adding Movies with validation                                                                                                                               
 function Movies()
  {
   let history=useHistory();
-   let Addmovie=(movies)=>{
-    fetch(`${URL}/movies`,
-    {method:"POST",
-    body:JSON.stringify(movies),
-    headers:{'Content-Type': 'application/json'} 
-    }).then(()=>history.push("/"));
-    }
+  
+  
+  const Addmovie=(movies)=>{
+    axios(
+      {
+        url:`${movie_URL}/addmovie`,
+        method:'POST',
+        data:{data:movies},
+      }).then(()=>history.push("/"))
+  }
 
   let validation =yup.object({
     name:yup.string().required('Required Field'),
@@ -426,45 +494,35 @@ function Movies()
 
 
 
-function Movieslist({setDeletedmovielist,deletedmovielist})   /*Display Movielist,   Deleting Movies*/  
+function Movieslist({setDeletedmovielist,deletedmovielist})  
 {
 
-  // let [newmovielist, setNewmovielist] = useState([]);
   const {newmovielist, setNewmovielist}=useContext(context);
-  let Displaymovies=()=>fetch(`${URL}/movies`).then((x)=>x.json()).then((data)=>setNewmovielist(data));
+  let Displaymovies=()=>{
+    axios(
+      {
+        url:`${movie_URL}/getmovies`,
+        method:'GET'
+      }).then(response=>setNewmovielist(response.data)).catch()
+  }
   useEffect(Displaymovies,[]);
-  console.log(newmovielist);
+  
   let history=useHistory();
    let deletemovie=((id)=>fetch(`${URL}/movies/${id}`,{method:"DELETE"})
    .then((x)=>x.json()).then((x)=>setDeletedmovielist([...deletedmovielist,x])).then(()=>Displaymovies()));
 
-  
-  return (
-  
-    <div className="movie-main">
-    {newmovielist.map(({name,poster,rating,summary,_id},index)=> {return(<div key={index} className="movie-content">     
+  return (<div>
+    {(newmovielist.length)?<div className="movie-main">
+    {newmovielist.map(({name,poster,_id},index)=> {
+      return(<div key={index} className="movie-content">     
     <img src={poster} alt={name} title={name} />   
     
     <div className='overlay-container'>
     <IconButton onClick={()=>history.push("/Movies/"+ _id)}><PlayCircleOutlineTwoToneIcon className='play-button' color='primary'/></IconButton>
     </div>
-
-
-    <div className="movie-details">        
-    {/* <label>{name}</label>   */}
-    {/* <p>Rating: {rating}</p> */}
-    {/* <Moreinfo summary={summary} history={history} i={_id} data={newmovielist} 
-    deletedmovie={
-      <Tooltip title='Delete'>
-    <IconButton onClick={()=>deletemovie(_id)}>
-    <DeleteIcon color="error"></DeleteIcon></IconButton>
-    </Tooltip>}
-    editmovie= {
-      <Tooltip title='Edit'>
-    <IconButton onClick={()=>history.push("/Movies/Edit/"+_id)}> <EditIcon color="primary"></EditIcon> </IconButton></Tooltip>} /> */}
-    
-    </div>    
+ 
    </div>)})}
+   </div>:''}
    </div>)
 }
 
@@ -504,17 +562,32 @@ function Moreinfo({summary,i,history,data,editmovie,deletedmovie})  /*Movie Deta
 function IndividualMoviedata()  /*Trailer*/ 
 {
   let [newmovielist, setNewmovielist] = useState({});
-    let {i}=useParams();
-  useEffect((()=>fetch(`${URL}/movies/${i}`).then((data)=>data.json()).then((x)=>setNewmovielist(x))),[i])
+  const {Email,Token}=useContext(context);
+  let {i}=useParams();
+
+  // useEffect((()=>
+  // fetch(`${movie_URL}/movies/${i}`).then((data)=>data.json()).then((x)=>setNewmovielist(x))),[i])
+
+  useEffect(()=>{
+    axios(
+      {
+        url:`${movie_URL}/getmoviebyid`,
+        method:'POST',
+        data:{id:i}
+      }).then(response=>setNewmovielist(response.data))
+  },[i])
+
+
+
    let{name,summary,src,poster,rating} =newmovielist;
 
   const addtoWatchlist=()=>{
     axios(
       {
-        url:'',
+        url:`${movie_URL}/addwatchlist`,
         method:'POST',
-        data:{i},
-
+        data:{Email,id:i},
+        headers:{'x-auth-token':Token}
       })
   }
 
@@ -528,7 +601,7 @@ function IndividualMoviedata()  /*Trailer*/
     <div className="watchlist-btn-container">
     <p className='movie-heading'>{name}</p> 
 
-    <Button  color='warning'  variant="outlined">Add to watchlist</Button>
+    <Button  color='warning' onClick={()=>addtoWatchlist()}  variant="outlined">Add to watchlist</Button>
     </div>
 
 {/* startIcon={<SaveIcon />} */}
@@ -566,6 +639,39 @@ function Video({src})
   </div>
 }
 
+function WatchList()
+{
+  let history=useHistory();
+  const {Email,Token}=useContext(context);
+  const [watchlist,setWatchlist]=useState('')
+   useEffect(()=>{
+     axios(
+       {
+         url:`${movie_URL}/getwatchlist`,
+         method:'POST',
+         data:{Email},
+         headers:{'x-auth-token':Token}
+       }).then(response=>response.data).then(({WatchList})=>{setWatchlist(WatchList)}).catch()
+   },[]) 
+
+   return (
+    <div>
+      {(!watchlist)?<p>WatchList Empty</p>:''}
+      {
+    (watchlist.length)?<div className="movie-main">
+    {watchlist.map(({name,poster,_id},index)=> {
+      return(<div key={_id} className="movie-content">     
+    <img src={poster} alt={name} title={name} />   
+    
+    <div className='overlay-container'>
+    <IconButton onClick={()=>history.push("/Movies/"+ _id)}><PlayCircleOutlineTwoToneIcon className='play-button' color='primary'/></IconButton>
+    </div>
+ 
+   </div>)})}
+   </div>:''}
+
+   </div>)
+}
 
 
 function Search()
