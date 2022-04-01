@@ -30,9 +30,16 @@ import { Auth, ForgotPassword, UpdatePassword } from "./Auth";
 import { Movieslist, EditMoviedata, IndividualMoviedata, Movies, WatchList } from "./Movies";
 
 
-export const URL="https://node-movies-list.herokuapp.com"
-export const user_URL="http://localhost:2000/user"
-export const movie_URL="http://localhost:2000/movie"
+// export const URL="https://node-movies-list.herokuapp.com"
+// export const user_URL="http://localhost:2000/user"
+// export const movie_URL="http://localhost:2000/movie"
+
+export const user_URL="https://movie--application.herokuapp.com/user"
+export const movie_URL="https://movie--application.herokuapp.com/movie"
+
+
+
+
 
 // const mock_URL="https://6166c50413aa1d00170a6723.mockapi.io"
 // movies-movieslist
