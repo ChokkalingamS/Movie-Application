@@ -131,30 +131,65 @@ export function Movieslist({ setDeletedmovielist, deletedmovielist }) {
     </div> : ''}
   </div>);
 }
-// function Moreinfo({ summary, i, history, data, editmovie, deletedmovie }) {
+
+export function Trending()
+{
+  let history=useHistory();
+  const { newmovielist, setNewmovielist } = useContext(context);
+  let Displaymovies = () => {
+    axios(
+      {
+        url: `${movie_URL}/getmovies`,
+        method: 'GET'
+      }).then(response => setNewmovielist(response.data)).catch();
+  };
+  useEffect(Displaymovies, [setNewmovielist]);
+  return (<div>
+    {(newmovielist.length) ? <div className="movie-main">
+      {newmovielist.filter(({type})=>type==="trending").map(({ name, poster, _id }, index) => {
+        return (<div key={index} className="movie-content">
+          <img src={poster} alt={name} title={name} />
+
+          <div className='overlay-container'>
+            <IconButton onClick={() => history.push("/Movies/" + _id)}><PlayCircleOutlineTwoToneIcon className='play-button' color='primary' /></IconButton>
+          </div>
+
+        </div>);
+      })}
+    </div> : ''}
+  </div>);
+
+}
 
 
+export function Upcoming()
+{
+  let history=useHistory();
+  const { newmovielist, setNewmovielist } = useContext(context);
+  let Displaymovies = () => {
+    axios(
+      {
+        url: `${movie_URL}/getmovies`,
+        method: 'GET'
+      }).then(response => setNewmovielist(response.data)).catch();
+  };
+  useEffect(Displaymovies, [setNewmovielist]);
+  return (<div>
+    {(newmovielist.length) ? <div className="movie-main">
+      {newmovielist.filter(({type})=>type==="upcoming").map(({ name, poster, _id }, index) => {
+        return (<div key={index} className="movie-content">
+          <img src={poster} alt={name} title={name} />
 
-//   let [description, setDescription] = useState("none");
-//   let contentvisibility = (() => { console.log("visibility"); return setDescription(() => (description === "block") ? "none" : "block"); });
-//   let visibility = { display: description };
-//   let [like, setLike] = useState(0);
-//   let [dislike, setDislike] = useState(0);
-//   return (
-//     <div>
-//       <Tooltip title='More Info'>
-//         <IconButton onClick={() => { return contentvisibility(); }}><InfoIcon color="secondary" /></IconButton>
-//       </Tooltip>
-//       <IconButton onClick={() => { console.log(i); return history.push("/Movies/" + i); }}>
-//         <InfoIcon color="primary" /></IconButton>
-//       {/* <button onClick={() => { return setLike((like) => (like===0)?1:0); }}>Like{like}</button> */}
-//       {/* <button onClick={() => { return setDislike((dislike) => dislike + 1); }}>Disike{dislike}</button> */}
-//       {editmovie}{deletedmovie}
-//       <p className="summary" style={visibility}>Summary: {summary}</p>
-//     </div>);
-// }
+          <div className='overlay-container'>
+            <IconButton onClick={() => history.push("/Movies/" + _id)}><PlayCircleOutlineTwoToneIcon className='play-button' color='primary' /></IconButton>
+          </div>
 
+        </div>);
+      })}
+    </div> : ''}
+  </div>);
 
+}
 
 export function IndividualMoviedata() 
 {

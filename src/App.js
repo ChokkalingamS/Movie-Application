@@ -27,7 +27,7 @@ import { useState,useEffect,createContext} from 'react';
 
 // Validation
 import { Auth, ForgotPassword, UpdatePassword } from "./Auth";
-import { Movieslist, EditMoviedata, IndividualMoviedata, Movies, WatchList } from "./Movies";
+import { Movieslist, EditMoviedata, IndividualMoviedata, Movies, WatchList ,Trending,Upcoming} from "./Movies";
 
 
 // export const URL="https://node-movies-list.herokuapp.com"
@@ -80,10 +80,6 @@ export default  function App()
         }
 
     }
-    // else if(searchData==='')
-    // {
-
-    // }
 
   }
 
@@ -97,9 +93,7 @@ export default  function App()
   return (
                   <div className="Main"> 
                 <div className="list">
-                {/* <img src='https://www.pngfind.com/pngs/m/26-261858_play-icon-png-graphic-cave-10-news-first.png'alt='logo'/ */}
                 <Button color="inherit"><Link className="link" to="/">Home</Link></Button>
-                <Button color="inherit"><Link className="link" to="/Category">Category</Link></Button>
                 <Button color="inherit"><Link className="link" to="/trending">Trending</Link></Button>
                 <Button color="inherit"><Link className="link" to="/Upcoming">Upcoming</Link></Button>
                 
@@ -107,11 +101,6 @@ export default  function App()
 
                 <input type='text' id='search-field'  onChange={(e) => { SearchMovie(e.target.value); }} placeholder='Search Movies...'/>
                 {(showData)?<SearchData filteredResults={filteredResults} setFilteredResults={setFilteredResults} setShowData={setShowData}/>:''}
-                
-                {/* {(!Email && !Token)?<Button color="inherit" onClick={()=>history.push('/Auth')}>
-                  <Link className="link" to="/Auth">Login</Link>
-                </Button>:''} */}
-
                 {(Email || Token)?<div className='avatar-container'><AccountMenu/></div>:
                 <div className='sigin-button'>
                 <Button color="inherit" onClick={()=>history.push('/Auth')}>
@@ -129,6 +118,10 @@ export default  function App()
                 <Route exact path="/"> <Movieslist deletedmovielist={deletedmovielist} setDeletedmovielist={setDeletedmovielist}/></Route>     {/* OldMovielist */}
                 
                 <Route exact path="/Movies/Edit/:i"><EditMoviedata/></Route>   {/* Edit Movie*/}
+
+                <Route exact path='/trending'><Trending /></Route>
+
+                <Route exact path='/upcoming'><Upcoming /></Route>
 
                 <Route  path="/Movies/:i"><IndividualMoviedata /></Route>  {/* Individual Moviedata */}
 
