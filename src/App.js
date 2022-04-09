@@ -140,7 +140,7 @@ export default  function App()
                 
                 <Route exact path='/forgotpassword'><ForgotPassword/></Route>
               
-                <Route exact path='/updatepassword'><UpdatePassword/></Route>
+                <Route exact path='/updatepassword/:id'><UpdatePassword/></Route>
               
                 <Route path="**"><Errorpage/></Route>
                 
