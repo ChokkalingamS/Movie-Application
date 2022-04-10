@@ -95,7 +95,7 @@ export function Movies() {
           label="Trailer" variant="outlined" />
       </div>
       <br />
-      <Button variant="contained" type="submit">Save</Button>
+      <Button fullWidth className='submit' variant="contained" type="submit">Save</Button>
     </form>
   </div>
   );
@@ -508,7 +508,7 @@ function Update({ newmovielist })
       <TextField fullWidth className='add-text-field-container' value={values.summary} onChange={handleChange} onBlur={handleBlur} error={errors.summary && touched.summary} helperText={errors.summary && touched.summary && errors.summary} label="Summary" id="Summary" name="summary" variant="outlined" />
       <TextField fullWidth  className='add-text-field-container'value={values.src} onChange={handleChange} onBlur={handleBlur} error={errors.src && touched.src} helperText={errors.src && touched.src && errors.src} label="Trailer" id="src" name="src" variant="outlined" />
       <br/>
-      <Button type="submit" variant="contained">Save</Button>
+      <Button type="submit" className='submit' variant="contained">Save</Button>
     </form>
 
     <Stack spacing={2} sx={{ width: '100%' }}>

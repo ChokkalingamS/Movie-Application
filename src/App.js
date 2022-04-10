@@ -93,9 +93,9 @@ export default  function App()
   return (
                   <div className="Main"> 
                 <div className="list">
-                <Button color="inherit"><Link className="link" to="/">Home</Link></Button>
-                <Button color="inherit"><Link className="link" to="/trending">Trending</Link></Button>
-                <Button color="inherit"><Link className="link" to="/Upcoming">Upcoming</Link></Button>
+                <Button color="inherit"  className="link-button"><Link className="link" to="/">Home</Link></Button>
+                <Button color="inherit" className="link-button"><Link className="link" to="/trending">Trending</Link></Button>
+                <Button color="inherit" className="link-button"><Link className="link" to="/Upcoming">Upcoming</Link></Button>
                 
 
 
