@@ -5,8 +5,8 @@ import IconButton from '@mui/material/IconButton';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import axios from 'axios';
-import { GoogleLogin } from 'react-google-login';
-import googlelogo from './googlelogo.svg';
+// import { GoogleLogin } from 'react-google-login';
+// import googlelogo from './googlelogo.svg';
 import Typography from '@mui/material/Typography';
 import { InputAdornment, Tooltip } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -70,7 +70,7 @@ function Signup() {
   const handleClick = () => { setOpen(true); };
   const handleClose = () => { setOpen(false); };
 
-  let history = useHistory();
+  // let history = useHistory();
   let validation = yup.object({
     // eslint-disable-next-line
     Email: yup.string().required('Required Field').matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Must Be a Valid Email'),
@@ -103,26 +103,26 @@ function Signup() {
     validationSchema: validation,
     onSubmit: (userData) => { SignUp(userData); }
   });
-  const GoogleSignUp = (userData) => {
-    axios(
-      {
-        url: `${user_URL}/googlesignup`,
-        method: 'POST',
-        data: userData,
-      }).then(response => response.data).then(data => {
-        setMessage({ msg: data.Message, result: 'success' });
-        localStorage.setItem('Email', data.Email);
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', data.type);
+  // const GoogleSignUp = (userData) => {
+  //   axios(
+  //     {
+  //       url: `${user_URL}/googlesignup`,
+  //       method: 'POST',
+  //       data: userData,
+  //     }).then(response => response.data).then(data => {
+  //       setMessage({ msg: data.Message, result: 'success' });
+  //       localStorage.setItem('Email', data.Email);
+  //       localStorage.setItem('token', data.token);
+  //       localStorage.setItem('user', data.type);
 
-        setTimeout(() => { history.push('/'); }, 3000);
-      })
-      .catch((error) => setMessage({ msg: error.response.data.Message, result: 'warning' }))
-      .then(handleClick).then(() => setProgress(0));
-  };
+  //       setTimeout(() => { history.push('/'); }, 3000);
+  //     })
+  //     .catch((error) => setMessage({ msg: error.response.data.Message, result: 'warning' }))
+  //     .then(handleClick).then(() => setProgress(0));
+  // };
 
-  const Id = process.env.REACT_APP_CLIENT_ID;
-  const handleSuccess = (response) => GoogleSignUp(response);
+  // const Id = process.env.REACT_APP_CLIENT_ID;
+  // const handleSuccess = (response) => GoogleSignUp(response);
 
 
 
@@ -229,23 +229,23 @@ function Login() {
     onSubmit: (userData) => { login(userData); }
   });
 
-  const googleLogin = (userData) => {
+  // const googleLogin = (userData) => {
 
-    axios(
-      {
-        url: `${user_URL}/googlelogin`,
-        method: 'POST',
-        data: userData,
-      }).then(response => response.data).then(data => {
-        setMessage({ msg: data.Message, result: 'success' });
-        localStorage.setItem('Email', data.Email);
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', data.type);
-        setTimeout(() => { history.push('/'); }, 3000);
-      }).catch((error) => setMessage({ msg: error.response.data.Message, result: 'warning' }))
-      .then(handleClick).then(() => setProgress(0));
+  //   axios(
+  //     {
+  //       url: `${user_URL}/googlelogin`,
+  //       method: 'POST',
+  //       data: userData,
+  //     }).then(response => response.data).then(data => {
+  //       setMessage({ msg: data.Message, result: 'success' });
+  //       localStorage.setItem('Email', data.Email);
+  //       localStorage.setItem('token', data.token);
+  //       localStorage.setItem('user', data.type);
+  //       setTimeout(() => { history.push('/'); }, 3000);
+  //     }).catch((error) => setMessage({ msg: error.response.data.Message, result: 'warning' }))
+  //     .then(handleClick).then(() => setProgress(0));
 
-  };
+  // };
 
   // Password functionality
   const [text, setText] = useState('Show');
@@ -257,8 +257,8 @@ function Login() {
   };
 
 
-  const Id = process.env.REACT_APP_CLIENT_ID;
-  const handleSuccess = (response) => googleLogin(response);
+  // const Id = process.env.REACT_APP_CLIENT_ID;
+  // const handleSuccess = (response) => googleLogin(response);
 
   return (<div className="login">
     {(progress === 1) && <CircularProgress id='loginprogress' color='primary'></CircularProgress>}
