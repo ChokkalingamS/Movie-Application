@@ -155,12 +155,12 @@ function Signup() {
       <Button type='submit' variant='contained' fullWidth color='warning'>Get Started</Button>
     </form>
 
-    <div className='breakline'>
+    {/* <div className='breakline'>
       <div className='line'></div>
       <p>OR</p>
       <div className='line'></div>
-    </div>
-    <GoogleLogin
+    </div> */}
+    {/* <GoogleLogin
       render={renderProps => (
         <Button onClick={renderProps.onClick} fullWidth variant="primary" className='register-G'>
           <img src={googlelogo} alt='logo' />
@@ -170,7 +170,7 @@ function Signup() {
       clientId={Id}
       buttonText="Sign In"
       onSuccess={handleSuccess}
-      cookiePolicy={'single_host_origin'} />
+      cookiePolicy={'single_host_origin'} /> */}
     <Stack spacing={2} sx={{ width: '100%' }}>
       <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
         <Alert severity={Message.result} sx={{ width: '100%' }}>
@@ -289,13 +289,13 @@ function Login() {
 
       <Button variant='contained' type='submit' fullWidth color='primary'>Log In</Button>
     </form>
-    <div className='breakline'>
+    {/* <div className='breakline'>
       <div className='line'></div>
       <p>OR</p>
       <div className='line'></div>
-    </div>
+    </div> */}
 
-    <GoogleLogin
+    {/* <GoogleLogin
       render={renderProps => (
         <Button onClick={renderProps.onClick} fullWidth color="primary" className='login-G'>
           <img src={googlelogo} alt='logo' />
@@ -305,7 +305,7 @@ function Login() {
       clientId={Id}
       buttonText="Sign In"
       onSuccess={handleSuccess}
-      cookiePolicy={'single_host_origin'} />
+      cookiePolicy={'single_host_origin'} /> */}
 
     <Stack spacing={2} sx={{ width: '100%' }}>
       <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
