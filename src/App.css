@@ -469,6 +469,7 @@ body{
     width:159px;
     height:179px;
     margin-top: 2rem;
+    margin-left: 1rem;
   }  
   .movie-content img
   {
@@ -493,6 +494,12 @@ body{
   margin-top:3.8rem;
   margin-left:-2rem;
 }
+.sigin-button
+{
+  margin-top:4.2rem;
+  margin-left:-3rem;
+  /* margin-right: 0; */
+}
 #video
 {
   width:350px !important;
@@ -509,7 +516,7 @@ body{
 .more-info-container
 {
   flex-direction: column;
-  /* margin-left:10rem; */
+  margin-left:-3rem;
   /* width:17rem; */
 }
 
@@ -537,15 +544,15 @@ body{
 }
 .more-info-container>img
 {
-  margin-left:-26rem !important; 
+  margin-left:-2rem !important; 
   margin-top:2rem;
   margin-bottom: 2rem;
 }
 .more-info
 {
-  margin-left:-20rem;
-  /* margin-right: 0; */
-  /* width:20rem; */
+  /* margin-left:2rem; */
+  margin-right: 0;
+  /* width:15rem; */
 }
 /* .summary
 {
@@ -558,6 +565,18 @@ body{
   height:480px !important;
   /* margin-left:-4rem;  */
 }
-
+.auth-container
+{
+  width:19rem;
+}
+.auth-heading
+{
+  margin-left:4.5rem !important;
+}
+.forgotpassword-button
+{
+  margin-left:5rem !important;
+  width: 100%;
+}
 
 }
