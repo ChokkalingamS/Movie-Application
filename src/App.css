@@ -544,7 +544,7 @@ body{
 }
 .more-info-container>img
 {
-  margin-left:-2rem !important; 
+  margin-left:3rem !important; 
   margin-top:2rem;
   margin-bottom: 2rem;
 }
@@ -554,10 +554,11 @@ body{
   margin-right: 0;
   /* width:15rem; */
 }
-/* .summary
+
+.movie-heading
 {
-  margin-left: 0;
-} */
+  font-size: 1.2rem;
+}
 
 .youtube-video
 {
