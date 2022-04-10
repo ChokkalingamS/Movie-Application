@@ -80,7 +80,7 @@ let value=[
 
     {
         "name":"The Shawshank Redemption",
-        "rating":"9.3",
+        "rating":"4.3",
         "poster":"https://m.media-amazon.com/images/I/51zUbui+gbL._SY445_.jpg",
         "summary":"Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.",
         "src":"https://www.youtube.com/embed/NmzuHjWmXOc",
@@ -93,7 +93,7 @@ let value=[
     
     {
         "name":"12 Angry Men",
-        "rating":"9.0",
+        "rating":"4.0",
         "poster":"https://images-na.ssl-images-amazon.com/images/S/pv-target-images/08c56299bd22f83264a20025be29f9e6d47664792cde0d879bbd6f0cd3d673c8._RI_V_TTW_.jpg",
         "summary":"The jury in a New York City murder trial is frustrated by a single member whose skeptical caution forces them to more carefully consider the evidence before jumping to a hasty verdict.",
         "src":"https://www.youtube.com/embed/LcU0em4ERqA",
@@ -106,7 +106,7 @@ let value=[
     
     {
         "name":"Pulp fiction",
-        "rating":"8.9",
+        "rating":"4.9",
         "poster":"https://www.miramax.com/media/assets/Pulp-Fiction1.png",
         "summary":"The lives of two mob hitmen, a boxer, a gangster and his wife, and a pair of diner bandits intertwine in four tales of violence and redemption.",
         "src":"https://www.youtube.com/embed/s7EdQ4FqbhY",
@@ -119,7 +119,7 @@ let value=[
     
     {
         "name":"Fight Club",
-        "rating":"8.9",
+        "rating":"4.9",
         "poster":"https://lumiere-a.akamaihd.net/v1/images/image_174b2bb6.jpeg",
         "summary":"An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.",
         "src":"https://www.youtube.com/embed/qtRKdVHc-cE",
@@ -132,7 +132,7 @@ let value=[
     
     {
         "name":"Forrest Gump",
-        "rating":"8.8",
+        "rating":"3.8",
         "poster":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2ug07SJOdnZ4ZjvMlvo23l4LBIiiA91ATOP0QzP3OLe3zaLLVvYJ9_voVepuiy9Rnq_M&usqp=CAU",
         "summary":"The presidencies of Kennedy and Johnson, the Vietnam War, the Watergate scandal and other historical events unfold from the perspective of an Alabama man with an IQ of 75, whose only desire is to be reunited with his childhood sweetheart.",
         "src":"https://www.youtube.com/embed/bLvqoHBptjg",
@@ -145,7 +145,7 @@ let value=[
     
     {
         "name":"City of God",
-        "rating":"8.6",
+        "rating":"3.6",
         "poster":"https://m.media-amazon.com/images/M/MV5BMTQ2YmE5NTUtYjU4ZS00OTQ0LWFmNGYtYzE0N2Y4NzA4ZDQxXkEyXkFqcGdeQXVyMjc4MjEwNzY@._V1_FMjpg_UX1000_.jpg",
         "summary":"In the slums of Rio, two kids' paths diverge as one struggles to become a photographer and the other a kingpin.",
         "src":"https://www.youtube.com/embed/dcUOO4Itgmw",
@@ -158,7 +158,7 @@ let value=[
     
     {
         "name":"The Pianist",
-        "rating":"8.6",
+        "rating":"3.6",
         "poster":"https://m.media-amazon.com/images/M/MV5BOWRiZDIxZjktMTA1NC00MDQ2LWEzMjUtMTliZmY3NjQ3ODJiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
         "summary":"A Polish Jewish musician struggles to survive the destruction of the Warsaw ghetto of World War II.",
         "src":"https://www.youtube.com/embed/BFwGqLa_oAo",
@@ -171,7 +171,7 @@ let value=[
     
     {
         "name":"Gladiator",
-        "rating":"8.5",
+        "rating":"3.5",
         "poster":"https://m.media-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg",
         "summary":"A former Roman General sets out to exact vengeance against the corrupt emperor who murdered his family and sent him into slavery.",
         "src":"https://www.youtube.com/embed/P5ieIbInFpg",
@@ -184,7 +184,7 @@ let value=[
     
     {
         "name":"Whiplash",
-        "rating":"8.5",
+        "rating":"3.5",
         "poster":"https://flxt.tmsimg.com/assets/p10488558_p_v12_ai.jpg",
         "summary":"A promising young drummer enrolls at a cut-throat music conservatory where his dreams of greatness are mentored by an instructor who will stop at nothing to realize a student's potential.",
         "src":"https://www.youtube.com/embed/zIP_gtjDtfE",
@@ -320,11 +320,74 @@ let value=[
         "language":"Tamil",
         "country":"India",
         "genre":"Drama",
-        "cast":"Kamal Hassan,Fahad Fasil, Vijay Sethupathi",
+        "cast":"Vijay Sethupathi,Samantha,Nayanthara",
         "Released":2022,
         "type":"upcoming",
     },
+    {
+        "name":"Sarpatta",
+        "rating":"4.5",
+        "poster":"https://m.media-amazon.com/images/M/MV5BZmQ3OTIxNzUtODg2NS00YTIyLWIzNmItYTBhMTkxMjcwMzI0XkEyXkFqcGdeQXVyODEyNjEwMDk@._V1_.jpg",
+        "summary":"A young man living in the segregated Madras of the 1970s is presented with the opportunity to revive his boxing career and his clan. He decides to take it but soon faces challenges in his path.",
+        "src":"https://www.youtube.com/embed/XTTAHt4VlUA",
+        "language":"Tamil",
+        "country":"India",
+        "genre":"Drama",
+        "cast":"Arya,John Kokken,Shabeer Kallarakkal,Dushara Vijayan",
+        "Released":2022,
+        "type":"upcoming",
+    },
+    {
+        "name":"Jurassic World Dominion",
+        "rating":"4.5",
+        "poster":"https://assetscdn1.paytm.com/images/cinema/jursa1-56f0acc0-8cb7-11ec-a324-23682b4f5e45.jpg",
+        "summary":"The future of mankind hangs in the balance as humans and dinosaurs coexist following the destruction of Isla Nublar.",
+        "src":"https://www.youtube.com/embed/fb5ELWi-ekk",
+        "language":"English",
+        "country":"USA",
+        "genre":"Adventure",
+        "cast":"Sam Neill,Bryce Dallas Howard,Chris Pratt,Laura Dern",
+        "Released":2022,
+        "type":"upcoming",
+    },
+    {
+        "name":"DC League of Super-Pets",
+        "rating":"4.5",
+        "poster":"https://m.media-amazon.com/images/M/MV5BYzVlZjk4YzMtZDNhNC00ZjY0LTg5ZmEtNjU1MTJlN2NhY2VlXkEyXkFqcGdeQXVyMTEzMTI1Mjk3._V1_.jpg",
+        "summary":"Krypto the Super-Dog and Superman are inseparable best friends, sharing the same superpowers and fighting crime side by side in Metropolis. However, when the Man of Steel and the rest of the Justice League are kidnapped, Krypto must convince a ragtag group of animals to master their own newfound powers for a rescue mission.",
+        "src":"https://www.youtube.com/embed/1jkw2JPCl18",
+        "language":"English",
+        "country":"USA",
+        "genre":"Animation",
+        "cast":"Dwayne Johnson,Keanu Reeves",
+        "Released":2022,
+        "type":"upcoming",
+    },
+    {
+        "name":"Rocketry",
+        "rating":"4.5",
+        "poster":"https://cdn.bollywoodmdb.com/movies/largethumb/2021/rocketry-the-nambi-effect/poster.jpg",
+        "summary":"Rocketry: The Nambi Effect is an upcoming Indian biographical drama film based on the life of Nambi Narayanan, a former scientist and aerospace engineer of the Indian Space Research Organisation who was accused of espionage",
+        "src":"https://www.youtube.com/embed/OKPIsX0XreY",
+        "language":"Tamil",
+        "country":"India",
+        "genre":"Biopic",
+        "cast":"R.Madhavan,Suriya,Simran",
+        "Released":2022,
+        "type":"upcoming",
+    },
+    {
+        "name":"Valimai",
+        "rating":"4.5",
+        "poster":"https://m.media-amazon.com/images/M/MV5BMjFiODQ1ZTMtZjliOS00NjRiLWE2MGEtNTA5OTEzNWIxYmQ5XkEyXkFqcGdeQXVyMTEzNzg0Mjkx._V1_.jpg",
+        "summary":"Arjun, a police officer, sets out on a mission to hunt down a group of violent bikers after they're involved in a theft and murder.",
+        "src":"https://www.youtube.com/embed/Gi83R8jEqZU",
+        "language":"Tamil",
+        "country":"India",
+        "genre":"Action",
+        "cast":"Ajithkumar,Huma Qureshi,Kartikeya Gummakonda",
+        "Released":2022,
+        "type":"trending",
+    },
     ]
 
-
-    

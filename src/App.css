@@ -448,3 +448,116 @@ body{
   color: white;
   margin-top: -1rem;
 }
+
+
+@media screen and (max-width:600px)
+{
+  .list
+  {
+    margin-top:0rem;
+    margin-bottom: 2rem !important;
+    gap:1.5rem;
+  }
+  .movie-main
+  {
+    grid-template-columns: 1fr 1fr;
+    gap:1rem;
+    margin:2rem 1rem;
+  }
+  .movie-content
+  {
+    width:159px;
+    height:179px;
+    margin-top: 2rem;
+  }  
+  .movie-content img
+  {
+    height:200px;
+    width:139px;
+    margin: 0;
+  }
+  #search-field
+  {
+    margin-top:8rem;
+    margin-left:-12rem;
+  }
+  .overlay-container
+{
+
+  margin-top:-6rem;
+  margin-left:4.5rem;
+
+}
+.avatar-container
+{
+  margin-top:3.8rem;
+  margin-left:-2rem;
+}
+#video
+{
+  width:350px !important;
+  height:280px !important;
+  margin-left:-4rem; 
+}
+.movie-details img
+{
+  /* margin-left: -4rem; */
+  height:300px;
+  width: 200px;
+}
+
+.more-info-container
+{
+  flex-direction: column;
+  /* margin-left:10rem; */
+  /* width:17rem; */
+}
+
+.filterData-container
+{
+  width:16rem;
+  margin-left:3rem;
+  margin-top:12rem;
+}
+.filter-result-details > p
+{
+  font-size: 1rem;
+  width:6rem;
+}
+.no-result
+{
+  margin-top: -2rem;
+  margin-left: 2rem;
+}
+.watchlist-btn-container
+{
+  margin-top:-15rem;
+  margin-left:-4rem;
+  gap: 1rem;
+}
+.more-info-container>img
+{
+  margin-left:-26rem !important; 
+  margin-top:2rem;
+  margin-bottom: 2rem;
+}
+.more-info
+{
+  margin-left:-20rem;
+  /* margin-right: 0; */
+  /* width:20rem; */
+}
+/* .summary
+{
+  margin-left: 0;
+} */
+
+.youtube-video
+{
+  width:300px !important;
+  height:480px !important;
+  /* margin-left:-4rem;  */
+}
+
+
+}

@@ -159,7 +159,7 @@ function SearchData({filteredResults,setFilteredResults,setShowData})
           {(filteredResults.length)?<div>
 
             {filteredResults.map(({name,poster,_id})=>{
-              return (<div className='filter-results' onClick={()=>{history.push(`/Movies/${_id}`);setShowData(false)}}>
+              return (<div className='filter-results' key={_id} onClick={()=>{history.push(`/Movies/${_id}`);setShowData(false)}}>
                 <img src={poster} alt='poster' title={name}/>
                 <div className='filter-result-details'>
                   <p>{name}</p>
